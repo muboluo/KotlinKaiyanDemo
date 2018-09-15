@@ -2,7 +2,7 @@
 
 
 # ******
-# 声明： 该项目是参考github上的一个开源项目写的。是本人用来学习kotlin的dem项目。
+# 声明： 该项目是参考github上的一个开源项目写的。是本人用来学习kotlin的demo项目。
 # 喜欢的同学可以去原文地址加星点赞
 # 原文地址是：
 https://github.com/LRH1993/Eyepetizer-in-Kotlin
