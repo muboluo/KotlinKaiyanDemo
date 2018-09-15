@@ -1,22 +1,14 @@
 package com.tt.lvruheng.eyepetizer.ui.fragment
 
-import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
-import android.util.Log.println
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.tt.lvruheng.eyepetizer.R
 import com.tt.lvruheng.eyepetizer.adapter.HomeAdatper
 import com.tt.lvruheng.eyepetizer.mvp.contract.HomeContract
 import com.tt.lvruheng.eyepetizer.mvp.model.bean.HomeBean
 import com.tt.lvruheng.eyepetizer.mvp.model.bean.HomeBean.IssueListBean.ItemListBean
 import com.tt.lvruheng.eyepetizer.mvp.presenter.HomePresenter
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.home_fragment.*
 import java.util.*
 import java.util.regex.Pattern
@@ -25,12 +17,14 @@ import java.util.regex.Pattern
  * Created by lvruheng on 2017/7/4.
  */
 class HomeFragment : BaseFragment(), HomeContract.View, SwipeRefreshLayout.OnRefreshListener {
+
     var mIsRefresh: Boolean = false
     var mPresenter: HomePresenter? = null
     var mList = ArrayList<ItemListBean>()
     var mAdapter: HomeAdatper? = null
     var data: String? = null
     override fun setData(bean: HomeBean) {
+
         val regEx = "[^0-9]"
         val p = Pattern.compile(regEx)
         val m = p.matcher(bean?.nextPageUrl)
@@ -56,6 +50,7 @@ class HomeFragment : BaseFragment(), HomeContract.View, SwipeRefreshLayout.OnRef
     }
 
     override fun initView() {
+
         mPresenter = HomePresenter(context, this)
         mPresenter?.start()
         recyclerView.layoutManager = LinearLayoutManager(context)

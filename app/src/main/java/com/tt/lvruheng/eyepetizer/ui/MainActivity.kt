@@ -267,7 +267,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        
+
         if (keyCode == KeyEvent.KEYCODE_BACK) {
 
             if (System.currentTimeMillis().minus(mExitTime) <= 3000) {
