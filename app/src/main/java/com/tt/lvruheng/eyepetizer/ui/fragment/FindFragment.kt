@@ -1,7 +1,6 @@
 package com.tt.lvruheng.eyepetizer.ui.fragment
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import com.tt.lvruheng.eyepetizer.R
@@ -15,33 +14,43 @@ import kotlinx.android.synthetic.main.find_fragment.*
 /**
  * Created by lvruheng on 2017/7/4.
  */
-class FindFragment : BaseFragment(),FindContract.View {
-    var mPresenter: FindPresenter? = null
-    var mAdapter : FindAdapter? = null
-    var mList : MutableList<FindBean>? = null
+class FindFragment : BaseFragment(), FindContract.View, AdapterView.OnItemClickListener {
+
+    var findPresenter: FindPresenter? = null
+    var findList: MutableList<FindBean> = ArrayList()
+    var findAdapter: FindAdapter? = null
+
+
     override fun setData(beans: MutableList<FindBean>) {
-        mAdapter?.mList = beans
-        mList = beans
-        mAdapter?.notifyDataSetChanged()
+
+        findList = beans
+        findAdapter?.mList = beans
+        findAdapter?.notifyDataSetChanged()
     }
 
     override fun getLayoutResources(): Int {
+
         return R.layout.find_fragment
     }
 
     override fun initView() {
-        mPresenter = FindPresenter(context,this)
-        mPresenter?.start()
-        mAdapter = FindAdapter(context,mList)
-        gv_find.adapter = mAdapter
-        gv_find.setOnItemClickListener { parent, view, position, id ->
-            var bean = mList?.get(position)
-            var name = bean?.name
-            var intent : Intent = Intent(context,FindDetailActivity::class.java)
-            intent.putExtra("name",name)
-            startActivity(intent)
 
-        }
+        findPresenter = FindPresenter(context, this)
+        findAdapter = FindAdapter(context, findList)
+        gv_find.adapter = findAdapter
+        gv_find.onItemClickListener = this
+
+        findPresenter?.start()
+    }
+
+    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+        val findBean = findList[position]
+        val name = findBean.name
+
+        val intent = Intent(context, FindDetailActivity::class.java)
+        intent.putExtra("name", name)
+        startActivity(intent)
     }
 
 }

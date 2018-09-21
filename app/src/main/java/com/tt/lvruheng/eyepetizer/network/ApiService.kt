@@ -31,7 +31,6 @@ interface ApiService{
     @GET("v2/categories?udid=26868b32e808498db32fd51fb422d00175e179df&vc=83")
     fun getFindData() : Observable<MutableList<FindBean>>
 
-
     //获取热门排行信息
     @GET("v3/ranklist")
     fun getHotData(@Query("num") num :Int,@Query("strategy") strategy :String,
