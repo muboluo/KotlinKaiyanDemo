@@ -10,60 +10,78 @@ import android.widget.TextView
 import com.tt.lvruheng.eyepetizer.R
 import com.tt.lvruheng.eyepetizer.mvp.model.bean.FindBean
 import com.tt.lvruheng.eyepetizer.utils.ImageLoadUtils
-import org.w3c.dom.Text
 
-/**
- * Created by lvruheng on 2017/7/6.
- */
-class FindAdapter(context: Context,list: MutableList<FindBean>?) : BaseAdapter(){
-    var mContext : Context? = null
-    var mList : MutableList<FindBean>? = null
-    var mInflater : LayoutInflater? = null
+class FindAdapter(context: Context, list: MutableList<FindBean>) : BaseAdapter() {
+
+    var mContext: Context? = null
+    var dataList: MutableList<FindBean>? = null
+    var inflater: LayoutInflater? = null
+
+
     init {
+
         mContext = context
-        mList = list
-        mInflater = LayoutInflater.from(context)
+        dataList = list
+        inflater = LayoutInflater.from(context)
     }
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        var view : View
-        var holder : FindViewHolder
-        if (convertView == null) {
-            view = mInflater!!.inflate(R.layout.item_find,parent,false)
-            holder = FindViewHolder(view)
-            view.tag = holder
-        }else{
-            view = convertView
-            holder = view.tag as FindViewHolder
+
+    override fun getView(position: Int, itemView: View?, parent: ViewGroup?): View {
+
+
+        var view: View
+        var holder: FindHolder
+
+        when (itemView == null) {
+
+            true -> {
+
+                view = inflater!!.inflate(R.layout.item_find, parent, false)
+                holder = FindHolder(view)
+                view.tag = holder
+            }
+            else -> {
+
+                view = itemView!!
+                holder = itemView.tag as FindHolder
+            }
         }
-        ImageLoadUtils.display(mContext!!,holder.iv_photo, mList?.get(position)?.bgPicture!!)
-        holder.tv_title?.text = mList?.get(position)!!.name
-        return  view
+
+        holder.tv_title?.text = dataList?.get(position)!!.name
+        ImageLoadUtils.display(mContext!!, holder.iv_photo, dataList?.get(position)?.bgPicture!!)
+
+        return view
     }
 
-    override fun getItem(position: Int): FindBean? {
-        return mList?.get(position)
+    override fun getItem(p0: Int): FindBean? {
+
+        return dataList?.get(p0)
     }
 
-    override fun getItemId(position: Int): Long {
-        return  position.toLong()
+    override fun getItemId(p0: Int): Long {
+
+        return p0.toLong()
     }
 
     override fun getCount(): Int {
-        if(mList!=null){
-            return mList!!.size
-        }else{
-            return 0
+
+        return when (dataList == null) {
+
+            true ->
+                0
+            false -> dataList!!.size
+
         }
     }
-    class FindViewHolder(itemView : View){
-        var iv_photo : ImageView? = null
-        var tv_title : TextView? = null
+
+    class FindHolder(itemView: View) {
+
+        var tv_title: TextView? = null
+        var iv_photo: ImageView? = null
+
         init {
-           tv_title = itemView.findViewById(R.id.tv_title) as TextView?
-           iv_photo = itemView.findViewById(R.id.iv_photo) as ImageView?
-
+            tv_title = itemView.findViewById(R.id.tv_title) as TextView?
+            iv_photo = itemView.findViewById(R.id.iv_photo) as ImageView?
         }
-
     }
 
 }
