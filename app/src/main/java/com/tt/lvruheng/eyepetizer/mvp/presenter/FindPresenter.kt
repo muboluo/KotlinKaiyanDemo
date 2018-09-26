@@ -6,14 +6,11 @@ import com.tt.lvruheng.eyepetizer.mvp.model.FindModel
 import com.tt.lvruheng.eyepetizer.mvp.model.bean.FindBean
 import com.tt.lvruheng.eyepetizer.utils.applySchedulers
 
-/**
- * Created by lvruheng on 2017/7/6.
- */
 class FindPresenter(context: Context, view: FindContract.View) : FindContract.Presenter {
 
     var context: Context? = null
     var mView: FindContract.View? = null
-    val mModle: FindModel   by lazy {
+    val mModle: FindModel by lazy {
         FindModel()
 
     }

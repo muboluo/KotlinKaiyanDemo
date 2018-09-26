@@ -24,7 +24,7 @@ class FindFragment : BaseFragment(), FindContract.View, AdapterView.OnItemClickL
     override fun setData(beans: MutableList<FindBean>) {
 
         findList = beans
-        findAdapter?.mList = beans
+        findAdapter?.dataList = beans
         findAdapter?.notifyDataSetChanged()
     }
 
