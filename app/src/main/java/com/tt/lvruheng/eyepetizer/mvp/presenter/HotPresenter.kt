@@ -1,39 +1,41 @@
 package com.tt.lvruheng.eyepetizer.mvp.presenter
 
 import android.content.Context
-import com.tt.lvruheng.eyepetizer.mvp.contract.FindContract
 import com.tt.lvruheng.eyepetizer.mvp.contract.HotContract
-import com.tt.lvruheng.eyepetizer.mvp.model.FindModel
 import com.tt.lvruheng.eyepetizer.mvp.model.HotModel
-import com.tt.lvruheng.eyepetizer.mvp.model.bean.FindBean
 import com.tt.lvruheng.eyepetizer.mvp.model.bean.HotBean
 import com.tt.lvruheng.eyepetizer.utils.applySchedulers
-import io.reactivex.BackpressureOverflowStrategy
-import io.reactivex.Observable
 
 /**
  * Created by lvruheng on 2017/7/7.
  */
-class HotPresenter(context: Context,view: HotContract.View) : HotContract.Presenter{
+class HotPresenter(context: Context, view: HotContract.View) : HotContract.Presenter {
 
+    private var hotView: HotContract.View? = null
+    var context: Context? = null
 
-    var mContext : Context? = null
-    var mView : HotContract.View? = null
-    val mModel : HotModel by lazy {
+    private val hotModel by lazy {
         HotModel()
     }
+
     init {
-        mView = view
-        mContext = context
+        this.hotView = view
+        this.context = context
     }
+
     override fun start() {
 
     }
-    override fun requestData(strategy: String) {
-        val observable : Observable<HotBean>? = mContext?.let { mModel.loadData(mContext!!,strategy) }
-        observable?.applySchedulers()?.subscribe { bean : HotBean ->
-            mView?.setData(bean)
-        }
-    }
 
+    override fun requestData(strategy: String) {
+
+        context?.let {
+
+            hotModel.loadData(context!!, strategy)
+        }
+                ?.applySchedulers()
+                ?.subscribe { bean: HotBean ->
+                    hotView?.setData(bean)
+                }
+    }
 }
