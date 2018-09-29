@@ -2,18 +2,14 @@ package com.tt.lvruheng.eyepetizer.search
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.view.animation.DecelerateInterpolator
-import android.view.ViewAnimationUtils
-import android.opengl.ETC1.getHeight
-import android.opengl.ETC1.getWidth
 import android.annotation.SuppressLint
 import android.view.View
+import android.view.ViewAnimationUtils
+import android.view.animation.DecelerateInterpolator
 
 
-/**
- * Created by lvruheng on 2017/7/9.
- */
 class CircularRevealAnim {
+
     companion object {
 
         val DURATION: Long = 200
@@ -32,16 +28,32 @@ class CircularRevealAnim {
     private fun actionOtherVisible(isShow: Boolean, triggerView: View, animView: View) {
 
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
-            if (isShow) {
-                animView.visibility = View.VISIBLE
-                if (mListener != null) mListener!!.onShowAnimationEnd()
-            } else {
-                animView.visibility = View.GONE
-                if (mListener != null) mListener!!.onHideAnimationEnd()
-            }
+
+            showOrHideViewWithoutAnim(isShow, animView)
             return
         }
 
+        val (tvX, tvY, maxRadius) = calculateMaxRadius(triggerView, animView)
+
+        val (startRadius: Float, endRadius: Float) = setStartRadiusAndEndRadius(isShow, maxRadius)
+
+        setAnim(animView, tvX, tvY, startRadius, endRadius, isShow)
+    }
+
+
+    private fun showOrHideViewWithoutAnim(isShow: Boolean, animView: View) {
+
+        if (isShow) {
+            animView.visibility = View.VISIBLE
+            if (mListener != null) mListener!!.onShowAnimationEnd()
+        } else {
+            animView.visibility = View.GONE
+            if (mListener != null) mListener!!.onHideAnimationEnd()
+        }
+    }
+
+
+    private fun calculateMaxRadius(triggerView: View, animView: View): Triple<Int, Int, Float> {
         /**
          * 计算 triggerView 的中心位置
          */
@@ -62,6 +74,12 @@ class CircularRevealAnim {
         val rippleH = if (tvY < avY) animView.height - tvY else tvY - avLocation[1]
 
         val maxRadius = Math.sqrt((rippleW * rippleW + rippleH * rippleH).toDouble()).toFloat()
+        return Triple(tvX, tvY, maxRadius)
+    }
+
+
+    private fun setStartRadiusAndEndRadius(isShow: Boolean, maxRadius: Float): Pair<Float, Float> {
+
         val startRadius: Float
         val endRadius: Float
 
@@ -72,6 +90,12 @@ class CircularRevealAnim {
             startRadius = maxRadius
             endRadius = 0f
         }
+        return Pair(startRadius, endRadius)
+    }
+
+
+    @SuppressLint("NewApi")
+    private fun setAnim(animView: View, tvX: Int, tvY: Int, startRadius: Float, endRadius: Float, isShow: Boolean) {
 
         val anim = ViewAnimationUtils.createCircularReveal(animView, tvX, tvY, startRadius, endRadius)
         animView.visibility = View.VISIBLE
@@ -95,16 +119,16 @@ class CircularRevealAnim {
     }
 
     fun show(triggerView: View, showView: View) {
+
         actionOtherVisible(true, triggerView, showView)
     }
 
     fun hide(triggerView: View, hideView: View) {
+
         actionOtherVisible(false, triggerView, hideView)
     }
 
     fun setAnimListener(listener: AnimListener) {
         mListener = listener
     }
-
-
 }

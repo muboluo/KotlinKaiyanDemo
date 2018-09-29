@@ -4,19 +4,19 @@ import android.app.DialogFragment
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Typeface
-import com.tt.lvruheng.eyepetizer.R
 import android.os.Bundle
+import android.support.v7.widget.DefaultItemAnimator
+import android.text.TextUtils
 import android.view.*
+import android.widget.Toast
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.tt.lvruheng.eyepetizer.R
+import com.tt.lvruheng.eyepetizer.adapter.SearchAdapter
+import com.tt.lvruheng.eyepetizer.ui.ResultActivity
 import com.tt.lvruheng.eyepetizer.utils.KeyBoardUtils
 import kotlinx.android.synthetic.main.search_fragment.*
-import android.widget.Toast
-import android.text.TextUtils
-import com.tt.lvruheng.eyepetizer.adapter.SearchAdapter
-import android.support.v7.widget.DefaultItemAnimator
-import com.google.android.flexbox.FlexWrap
-import com.google.android.flexbox.FlexDirection
-import com.google.android.flexbox.FlexboxLayoutManager
-import com.tt.lvruheng.eyepetizer.ui.ResultActivity
 
 
 /**
@@ -94,8 +94,8 @@ class SearchFragment : DialogFragment(), CircularRevealAnim.AnimListener,
     }
 
     override fun onHideAnimationEnd() {
-        et_search_keyword.setText("");
-        dismiss();
+        et_search_keyword.setText("")
+        dismiss()
     }
 
     override fun onShowAnimationEnd() {
