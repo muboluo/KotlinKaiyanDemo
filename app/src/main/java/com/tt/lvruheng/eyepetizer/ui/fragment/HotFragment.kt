@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.hot_fragment.*
 
 class HotFragment : BaseFragment() {
 
-    lateinit var fragmentList: ArrayList<Fragment>
+    var fragmentList: ArrayList<Fragment> = ArrayList()
 
     private val STRATEGY = arrayOf("weekly", "monthly", "historical")
 

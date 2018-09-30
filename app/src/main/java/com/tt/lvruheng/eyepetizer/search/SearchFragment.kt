@@ -35,7 +35,7 @@ class SearchFragment : DialogFragment(), CircularRevealAnim.AnimListener,
     lateinit var mAdatper : SearchAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NO_FRAME, R.style.DialogStyle);
+        setStyle(DialogFragment.STYLE_NO_FRAME, R.style.DialogStyle)
 
     }
 
@@ -86,19 +86,19 @@ class SearchFragment : DialogFragment(), CircularRevealAnim.AnimListener,
     private fun init() {
         tv_hint.typeface = Typeface.createFromAsset(activity.assets, "fonts/FZLanTingHeiS-DB1-GB-Regular.TTF")
         mCircularRevealAnim = CircularRevealAnim()
-        mCircularRevealAnim.setAnimListener(this)
+        mCircularRevealAnim.animListener = this
         dialog.setOnKeyListener(this)
         iv_search_search.viewTreeObserver.addOnPreDrawListener(this)
         iv_search_search.setOnClickListener(this)
         iv_search_back.setOnClickListener(this)
     }
 
-    override fun onHideAnimationEnd() {
+    override fun onHideAnimEnd() {
         et_search_keyword.setText("")
         dismiss()
     }
 
-    override fun onShowAnimationEnd() {
+    override fun onShowAnimEnd() {
         if (isVisible) {
             KeyBoardUtils.openKeyboard(activity, et_search_keyword);
         }
@@ -106,7 +106,7 @@ class SearchFragment : DialogFragment(), CircularRevealAnim.AnimListener,
 
     override fun onPreDraw(): Boolean {
         iv_search_search.viewTreeObserver.removeOnPreDrawListener(this);
-        mCircularRevealAnim.show(iv_search_search, mRootView);
+        mCircularRevealAnim.showView(iv_search_search, mRootView)
         return true;
     }
 
@@ -134,7 +134,7 @@ class SearchFragment : DialogFragment(), CircularRevealAnim.AnimListener,
 
     private fun hideAnim() {
         KeyBoardUtils.closeKeyboard(activity, et_search_keyword);
-        mCircularRevealAnim.hide(iv_search_search, mRootView)
+        mCircularRevealAnim.hideView(iv_search_search, mRootView)
     }
 
     override fun onClick(v: View?) {
