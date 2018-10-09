@@ -89,7 +89,6 @@ class CircularRevealAnim {
 
             startX = startLocationArray[0] + it.width / 2
             startY = startLocationArray[1] + it.height / 2
-
         }
 
         val animLocationArray = IntArray(2)
