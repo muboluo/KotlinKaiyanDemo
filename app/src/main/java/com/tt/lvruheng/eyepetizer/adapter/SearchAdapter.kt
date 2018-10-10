@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.tt.lvruheng.eyepetizer.R
 import com.google.android.flexbox.FlexboxLayoutManager
+import com.tt.lvruheng.eyepetizer.R
 import com.tt.lvruheng.eyepetizer.ui.ResultActivity
 
 
@@ -16,10 +16,11 @@ import com.tt.lvruheng.eyepetizer.ui.ResultActivity
  * Created by lvruheng on 2017/7/9.
  */
 class SearchAdapter(context: Context, list: ArrayList<String>) : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
-    var context: Context? = null;
+
+    var context: Context? = null
     var list: ArrayList<String>? = null
     var inflater: LayoutInflater? = null
-    var mDialogListener : onDialogDismiss? = null
+    var mDialogListener: onDialogDismiss? = null
 
     init {
         this.context = context
@@ -35,12 +36,12 @@ class SearchAdapter(context: Context, list: ArrayList<String>) : RecyclerView.Ad
         holder?.tv_title?.text = list!![position]
         val params = holder?.tv_title?.layoutParams
         if (params is FlexboxLayoutManager.LayoutParams) {
-            (holder?.tv_title?.layoutParams as FlexboxLayoutManager.LayoutParams).flexGrow = 1.0f
+            (holder.tv_title.layoutParams as FlexboxLayoutManager.LayoutParams).flexGrow = 1.0f
         }
         holder?.itemView?.setOnClickListener {
-            var keyWord = list?.get(position)
-            var intent : Intent = Intent(context,ResultActivity::class.java)
-            intent.putExtra("keyWord",keyWord)
+            val keyWord = list?.get(position)
+            val intent: Intent = Intent(context, ResultActivity::class.java)
+            intent.putExtra("keyWord", keyWord)
             context?.startActivity(intent)
             mDialogListener?.onDismiss()
         }
@@ -53,12 +54,14 @@ class SearchAdapter(context: Context, list: ArrayList<String>) : RecyclerView.Ad
 
     class SearchViewHolder(itemView: View?, context: Context) : RecyclerView.ViewHolder(itemView) {
         var tv_title: TextView = itemView?.findViewById(R.id.tv_title) as TextView
-        
+
     }
-    interface onDialogDismiss{
+
+    interface onDialogDismiss {
         fun onDismiss()
     }
-    fun setOnDialogDismissListener(onDialogDismiss:onDialogDismiss){
+
+    fun setOnDialogDismissListener(onDialogDismiss: onDialogDismiss) {
         mDialogListener = onDialogDismiss
     }
 }

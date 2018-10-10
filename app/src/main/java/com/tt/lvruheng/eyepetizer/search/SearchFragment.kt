@@ -88,6 +88,7 @@ class SearchFragment : DialogFragment(),
                 hideAnim()
             }
         })
+
         val manager = FlexboxLayoutManager()
         //设置主轴排列方式
         manager.flexDirection = FlexDirection.ROW
