@@ -72,14 +72,19 @@ class ResultActivity : AppCompatActivity(), ResultContract.View, SwipeRefreshLay
         recyclerView.adapter = mAdapter
         refreshLayout.setOnRefreshListener(this)
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
 
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                var layoutManager: LinearLayoutManager = recyclerView?.layoutManager as LinearLayoutManager
-                var lastPositon = layoutManager.findLastVisibleItemPosition()
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastPositon == mList.size - 1) {
-                    start = start.plus(10)
-                    mPresenter.requestData(keyWord, start)
+                recyclerView?.let {
+
+                    val manager = it.layoutManager as LinearLayoutManager
+                    val lastVisiblePosition = manager.findLastVisibleItemPosition()
+
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisiblePosition == mList.size - 1) {
+
+                        start = start.plus(10)
+                        mPresenter.requestData(keyWord,start)
+                    }
                 }
             }
         })
