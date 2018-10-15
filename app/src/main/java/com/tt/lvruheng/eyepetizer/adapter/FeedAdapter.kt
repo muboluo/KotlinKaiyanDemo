@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat
  * Created by lvruheng on 2017/7/7.
  */
 class FeedAdapter(context: Context, list: ArrayList<HotBean.ItemListBean.DataBean>) : RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
+
     var context: Context? = null;
     var list: ArrayList<HotBean.ItemListBean.DataBean>? = null
     var inflater: LayoutInflater? = null
@@ -42,6 +43,7 @@ class FeedAdapter(context: Context, list: ArrayList<HotBean.ItemListBean.DataBea
     }
 
     override fun onBindViewHolder(holder: FeedViewHolder?, position: Int) {
+
         var photoUrl : String? = list?.get(position)?.cover?.feed
         photoUrl?.let { ImageLoadUtils.display(context!!,holder?.iv_photo, it) }
         var title : String? = list?.get(position)?.title
