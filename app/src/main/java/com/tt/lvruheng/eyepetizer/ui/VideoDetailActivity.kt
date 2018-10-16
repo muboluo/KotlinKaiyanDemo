@@ -3,28 +3,27 @@ package com.tt.lvruheng.eyepetizer.ui
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
-import android.graphics.Typeface
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import com.tt.lvruheng.eyepetizer.R
-import com.tt.lvruheng.eyepetizer.mvp.model.bean.VideoBean
-import kotlinx.android.synthetic.main.activity_video_detail.*
 import android.graphics.BitmapFactory
-import com.bumptech.glide.Glide
+import android.graphics.Typeface
 import android.os.AsyncTask
+import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.shuyu.gsyvideoplayer.GSYVideoPlayer
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
+import com.tt.lvruheng.eyepetizer.R
+import com.tt.lvruheng.eyepetizer.mvp.model.bean.VideoBean
 import com.tt.lvruheng.eyepetizer.utils.*
+import kotlinx.android.synthetic.main.activity_video_detail.*
 import zlc.season.rxdownload2.RxDownload
 import java.io.FileInputStream
 import java.io.FileNotFoundException
-import java.net.URI
 import java.util.concurrent.ExecutionException
 
 
@@ -42,6 +41,7 @@ class VideoDetailActivity : AppCompatActivity() {
     var isPlay: Boolean = false
     var isPause: Boolean = false
     lateinit var orientationUtils: OrientationUtils
+
     var mHandler: Handler = object : Handler() {
         override fun handleMessage(msg: Message?) {
             super.handleMessage(msg)
@@ -57,38 +57,79 @@ class VideoDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_detail)
-        bean = intent.getParcelableExtra<VideoBean>("data")
+
+        getDataFromLastPage()
+
         initView()
+
         prepareVideo()
     }
 
+    private fun getDataFromLastPage() {
+
+        bean = intent.getParcelableExtra<VideoBean>("data")
+    }
+
     private fun initView() {
-        var bgUrl = bean.blurred
-        bgUrl?.let { ImageLoadUtils.displayHigh(this, iv_bottom_bg, bgUrl) }
-        tv_video_desc.text = bean.description
-        tv_video_desc.typeface = Typeface.createFromAsset(this.assets, "fonts/FZLanTingHeiS-DB1-GB-Regular.TTF")
+
+        setVideoTitleAndDescription()
+
+        setTimeText()
+
+        setUserInterActionPart()
+
+        setDownLoadBtn()
+    }
+
+    private fun setVideoTitleAndDescription() {
+
+        val imgBackground = bean.blurred
+        imgBackground?.let { ImageLoadUtils.displayHigh(this, iv_bottom_bg, imgBackground) }
+
         tv_video_title.text = bean.title
         tv_video_title.typeface = Typeface.createFromAsset(this.assets, "fonts/FZLanTingHeiS-L-GB-Regular.TTF")
-        var category = bean.category
-        var duration = bean.duration
-        var minute = duration?.div(60)
-        var second = duration?.minus((minute?.times(60)) as Long)
-        var realMinute: String
-        var realSecond: String
-        if (minute!! < 10) {
-            realMinute = "0" + minute
-        } else {
-            realMinute = minute.toString()
+        tv_video_desc.text = bean.description
+        tv_video_desc.typeface = Typeface.createFromAsset(this.assets, "fonts/FZLanTingHeiS-DB1-GB-Regular.TTF")
+    }
+
+    private fun setTimeText() {
+
+        var realMinute = ""
+        var realSecond = ""
+
+        val duration = bean.duration
+        val minutes = duration?.div(60)
+        val seconds = minutes?.times(60)?.let { duration.minus(it) }
+
+        minutes?.let {
+
+            realMinute = if (minutes < 10) {
+                "0$minutes"
+            } else {
+                "$minutes"
+            }
         }
-        if (second!! < 10) {
-            realSecond = "0" + second
-        } else {
-            realSecond = second.toString()
+        seconds?.let {
+
+            realSecond = if (seconds < 10) {
+
+                "0$seconds"
+            } else {
+                "$seconds"
+            }
         }
-        tv_video_time.text = "$category / $realMinute'$realSecond''"
+        tv_video_time.text = "${bean.category} / $realMinute'$realSecond''"
+    }
+
+    private fun setUserInterActionPart() {
+
         tv_video_favor.text = bean.collect.toString()
         tv_video_share.text = bean.share.toString()
-        tv_video_reply.text = bean.share.toString()
+        tv_video_reply.text = bean.reply.toString()
+    }
+
+    private fun setDownLoadBtn() {
+
         tv_video_download.setOnClickListener {
             //点击下载
             var url = bean.playUrl?.let { it1 -> SPUtils.getInstance(this, "downloads").getString(it1) }
@@ -101,7 +142,7 @@ class VideoDetailActivity : AppCompatActivity() {
                 }
                 SPUtils.getInstance(this, "downloads").put("count", count)
                 ObjectSaveUtils.saveObject(this, "download$count", bean)
-                addMission(bean.playUrl,count)
+                addMission(bean.playUrl, count)
             } else {
                 showToast("该视频已经缓存过了")
             }
@@ -109,9 +150,10 @@ class VideoDetailActivity : AppCompatActivity() {
     }
 
     private fun addMission(playUrl: String?, count: Int) {
-        RxDownload.getInstance(this).serviceDownload(playUrl,"download$count").subscribe({
+
+        RxDownload.getInstance(this).serviceDownload(playUrl, "download$count").subscribe({
             showToast("开始下载")
-            SPUtils.getInstance(this, "downloads").put(bean.playUrl.toString(),bean.playUrl.toString())
+            SPUtils.getInstance(this, "downloads").put(bean.playUrl.toString(), bean.playUrl.toString())
             SPUtils.getInstance(this, "download_state").put(playUrl.toString(), true)
         }, {
             showToast("添加任务失败")
@@ -119,11 +161,12 @@ class VideoDetailActivity : AppCompatActivity() {
     }
 
     private fun prepareVideo() {
+
         var uri = intent.getStringExtra("loaclFile")
-        if(uri!=null){
-            Log.e("uri",uri)
+        if (uri != null) {
+            Log.e("uri", uri)
             gsy_player.setUp(uri, false, null, null)
-        }else{
+        } else {
             gsy_player.setUp(bean.playUrl, false, null, null)
         }
         //增加封面
