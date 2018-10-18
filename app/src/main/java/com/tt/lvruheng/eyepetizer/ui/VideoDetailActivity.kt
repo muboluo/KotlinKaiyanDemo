@@ -132,19 +132,22 @@ class VideoDetailActivity : AppCompatActivity() {
 
         tv_video_download.setOnClickListener {
             //点击下载
-            var url = bean.playUrl?.let { it1 -> SPUtils.getInstance(this, "downloads").getString(it1) }
+            val url = bean.playUrl?.let {
+
+                SPUtils.getInstance(this, "downloads").getString(it)
+            }
+
             if (url.equals("")) {
+
                 var count = SPUtils.getInstance(this, "downloads").getInt("count")
-                if (count != -1) {
-                    count = count.inc()
+                count = if (count != -1) {
+                    count.inc()
                 } else {
-                    count = 1
+                    1
                 }
                 SPUtils.getInstance(this, "downloads").put("count", count)
                 ObjectSaveUtils.saveObject(this, "download$count", bean)
                 addMission(bean.playUrl, count)
-            } else {
-                showToast("该视频已经缓存过了")
             }
         }
     }
