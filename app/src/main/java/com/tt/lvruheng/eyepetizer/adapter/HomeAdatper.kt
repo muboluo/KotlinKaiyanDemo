@@ -5,8 +5,6 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Parcelable
 import android.support.v7.widget.RecyclerView
-import android.util.Log
-import android.util.Log.println
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,9 +17,6 @@ import com.tt.lvruheng.eyepetizer.ui.VideoDetailActivity
 import com.tt.lvruheng.eyepetizer.utils.ImageLoadUtils
 import com.tt.lvruheng.eyepetizer.utils.ObjectSaveUtils
 import com.tt.lvruheng.eyepetizer.utils.SPUtils
-import java.text.SimpleDateFormat
-import java.util.*
-import javax.xml.datatype.Duration
 
 /**
  * Created by lvruheng on 2017/7/5.

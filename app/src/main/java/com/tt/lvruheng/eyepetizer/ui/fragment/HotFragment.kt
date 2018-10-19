@@ -33,7 +33,7 @@ class HotFragment : BaseFragment() {
         initViewPager()
     }
 
-    private fun initWeekFragment() {
+    inline private fun initWeekFragment() {
 
         val weekFragment = RankFragment() as Fragment
         val weekBundle = Bundle()
@@ -43,7 +43,7 @@ class HotFragment : BaseFragment() {
         fragmentList.add(weekFragment)
     }
 
-    private fun initMonthFragment() {
+    inline private fun initMonthFragment() {
 
         val monthFragment = RankFragment() as Fragment
         val monthBundle = Bundle()
@@ -53,7 +53,7 @@ class HotFragment : BaseFragment() {
         fragmentList.add(monthFragment)
     }
 
-    private fun initHistoryFragment() {
+    inline private fun initHistoryFragment() {
 
         val historyFragment = RankFragment() as Fragment
         val historyBundle = Bundle()
@@ -63,7 +63,7 @@ class HotFragment : BaseFragment() {
         fragmentList.add(historyFragment)
     }
 
-    private fun initViewPager() {
+    inline private fun initViewPager() {
 
         vp_content.adapter = HotAdatpter(fragmentManager, fragmentList, tabs)
         tab_layout.setupWithViewPager(vp_content)
