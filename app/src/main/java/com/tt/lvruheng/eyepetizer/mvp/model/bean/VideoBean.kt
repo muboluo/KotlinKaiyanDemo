@@ -19,16 +19,6 @@ data class VideoBean(var feed: String?, var title: String?, var description: Str
         }
     }
 
-    interface Base{}
-
-    class singleText(val temp : Base) :Base by temp{
-
-        fun test() {
-            temp.let {  }
-
-        }
-    }
-
     constructor(source: Parcel) : this(
             source.readString(),
             source.readString(),
