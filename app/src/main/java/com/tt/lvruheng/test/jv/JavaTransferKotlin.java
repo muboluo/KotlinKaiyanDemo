@@ -26,6 +26,7 @@ public class JavaTransferKotlin {
 
         String weight = KotlinTest.WEIGHT;
 
+
         kotlinTest.ktMethodTest();
 
         KotlinTest.staticTest();//该方法会调用下面这个方法，所以是一样的

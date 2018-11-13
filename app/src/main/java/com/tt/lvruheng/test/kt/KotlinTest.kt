@@ -11,20 +11,21 @@ open class KotlinTest {
     //编译器默认生成java 类型的 private 类型变量，并提供 get set 方法
     var grade: String = "1"
 
-    //生成 public 类型变量， 不生成 get set 方法
+    //生成 protected 类型变量， 不生成 get set 方法
     @JvmField
     protected var score: Int? = null
 
     //生成 private 类型变量，不生成 get set
     private var gender: Boolean = true
 
-    fun Int.foo(){}
+    //生成 private 类型的变量
+    protected var hobby: String? = null
+
+    fun Int.foo() {}
 
     companion object {
 
         var test: Int? = null
-
-        test.foo
 
         // KotlinTest.Companion.getHEIGHT()
         val HEIGHT: String = "HEIGHT"
@@ -44,5 +45,14 @@ open class KotlinTest {
         val jtk: JavaTransferKotlin = JavaTransferKotlin()
         val field1 = jtk.test?.field1
 
+    }
+
+    fun testIF(x: Int): Int {
+
+        return if (x > 10) {
+            1
+        } else {
+            2
+        }
     }
 }
