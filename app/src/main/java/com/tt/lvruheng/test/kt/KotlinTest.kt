@@ -45,6 +45,9 @@ open class KotlinTest {
         val jtk: JavaTransferKotlin = JavaTransferKotlin()
         val field1 = jtk.test?.field1
 
+        val operatorTest: Int = 10
+
+
     }
 
     fun testIF(x: Int): Int {
