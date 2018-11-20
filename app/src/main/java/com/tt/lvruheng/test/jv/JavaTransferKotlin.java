@@ -13,8 +13,15 @@ public class JavaTransferKotlin {
 
     private final String TAG = JavaTransferKotlin.class.getSimpleName();
 
-    public FiledTest test;
+    private FiledTest test;
 
+    public FiledTest getTest() {
+        return test;
+    }
+
+    public void setTest(FiledTest test) {
+        this.test = test;
+    }
 
     public void getKotlinField() {
 
@@ -33,7 +40,7 @@ public class JavaTransferKotlin {
         KotlinTest.Companion.staticTest();
     }
 
-    public class FiledTest {
+    public static class FiledTest {
 
         public String field1;
     }

@@ -58,4 +58,22 @@ open class KotlinTest {
             2
         }
     }
+
+    fun testJava() {
+
+        val javaTransferKotlin = JavaTransferKotlin()
+        //这里，要注意一下，空安全的问题。这里如果不注意，同样会引发空安全的问题。
+        javaTransferKotlin.test = JavaTransferKotlin.FiledTest()
+
+        javaTransferKotlin.test.field1 = ""
+        javaTransferKotlin.test?.field1 = ""
+
+    }
+
+    fun testJavaClass() {
+
+        //不需要再使用这里 ::class 了。这里在新版本里面已经支持了。
+        val javaClass = KotlinTest.javaClass
+
+    }
 }
