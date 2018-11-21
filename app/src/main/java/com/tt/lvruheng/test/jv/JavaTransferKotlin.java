@@ -20,7 +20,13 @@ public class JavaTransferKotlin {
     }
 
     public void setTest(FiledTest test) {
+
         this.test = test;
+    }
+
+    public void is() {
+
+        // 测试kotlin is 方法
     }
 
     public void getKotlinField() {

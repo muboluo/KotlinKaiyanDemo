@@ -76,4 +76,14 @@ open class KotlinTest {
         val javaClass = KotlinTest.javaClass
 
     }
+
+    fun testTransferedMeaning() {
+
+        val test = JavaTransferKotlin()
+
+        //转义，编译器自动转义
+        test.`is`()
+
+
+    }
 }
