@@ -81,9 +81,7 @@ open class KotlinTest {
 
         val test = JavaTransferKotlin()
 
-        //转义，编译器自动转义
+        //转义器自动转义
         test.`is`()
-
-
     }
 }
