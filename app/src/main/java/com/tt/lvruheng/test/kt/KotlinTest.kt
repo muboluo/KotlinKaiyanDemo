@@ -84,4 +84,19 @@ open class KotlinTest {
         //转义器自动转义
         test.`is`()
     }
+
+    infix fun Int.addasdf(x: Int): Int {
+        return this + x
+    }
+
+    fun testZhongZhui() {
+
+        //中缀表示法
+
+        val add = 2.addasdf(3)
+        val i = 2 addasdf 3
+        print("the value is $add  $i")
+    }
+
+
 }
