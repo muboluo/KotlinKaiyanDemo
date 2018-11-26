@@ -1,5 +1,8 @@
 package com.tt.lvruheng.test.kt
 
+import com.tt.lvruheng.eyepetizer.ui.WatchActivity
+import com.tt.lvruheng.eyepetizer.utils.newIntent
+import com.tt.lvruheng.eyepetizer.utils.str
 import com.tt.lvruheng.test.jv.JavaTransferKotlin
 
 /**
@@ -83,6 +86,14 @@ open class KotlinTest {
 
         //转义器自动转义
         test.`is`()
+    }
+
+    //包级方法和属性的引用
+    fun testTopMethodAndAttribute() {
+
+        str.length
+
+        WatchActivity().newIntent<WatchActivity>()
     }
 
     infix fun Int.addasdf(x: Int): Int {

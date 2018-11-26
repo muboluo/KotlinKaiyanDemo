@@ -39,7 +39,6 @@ class WatchActivity : AppCompatActivity() {
                 list?.let { mList.addAll(it) }
                 mAdapter.notifyDataSetChanged()
             }
-
         }
     }
 

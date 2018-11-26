@@ -11,7 +11,8 @@ import com.tt.lvruheng.eyepetizer.R
  * Created by lvruheng on 2017/7/6.
  */
 class ImageLoadUtils{
-    companion object{
+    companion object {
+
         fun display(context: Context, imageView: ImageView?, url: String) {
             if (imageView == null) {
                 throw IllegalArgumentException("argument error")
@@ -23,7 +24,8 @@ class ImageLoadUtils{
                     .error(R.drawable.ic_empty_picture)
                     .crossFade().into(imageView)
         }
-        fun displayHigh(context: Context, imageView: ImageView?, url: String){
+
+        fun displayHigh(context: Context, imageView: ImageView?, url: String) {
             if (imageView == null) {
                 throw IllegalArgumentException("argument error")
             }

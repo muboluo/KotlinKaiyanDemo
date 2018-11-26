@@ -9,9 +9,8 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-/**
- * Created by lvruheng on 2017/7/2.
- */
+val str: String = "1"
+
 fun Context.showToast(message: String) : Toast {
     var toast : Toast = Toast.makeText(this,message,Toast.LENGTH_SHORT)
     toast.setGravity(Gravity.CENTER,0,0)
@@ -23,6 +22,7 @@ inline fun <reified T: Activity> Activity.newIntent() {
     val intent = Intent(this, T::class.java)
     startActivity(intent)
 }
+
 fun <T> Observable<T>.applySchedulers(): Observable<T> {
     return subscribeOn(Schedulers.io()).
             unsubscribeOn(Schedulers.io()).
