@@ -8,7 +8,7 @@ import com.tt.lvruheng.test.jv.JavaTransferKotlin
 /**
  * Created by henry on 2018/10/25.
  */
-open class KotlinTest {
+open class KotlinTest(var constructTest: String) {
 
     var name: String? = null
     //编译器默认生成java 类型的 private 类型变量，并提供 get set 方法
@@ -21,8 +21,22 @@ open class KotlinTest {
     //生成 private 类型变量，不生成 get set
     private var gender: Boolean = true
 
+    private var outer: String? = null
+
+
     //生成 private 类型的变量
     protected var hobby: String? = null
+
+    inner class InnerTest {
+
+        var gameInner: String? = outer
+    }
+
+    fun constructorTest() {
+
+        constructTest.run {  }
+
+    }
 
     fun Int.foo() {}
 
